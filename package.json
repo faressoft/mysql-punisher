@@ -1,6 +1,6 @@
 {
   "name": "mysql-punisher",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Watch and kill active mysql queries that exeeded a specefic timeout",
   "main": "bin/index.js",
   "bin": {
