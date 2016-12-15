@@ -21,13 +21,24 @@ npm install mysql-punisher -g
 ### Usage
 
 ```
-mysql-punisher -h <hostname> -u <username> [-p <password>] -t <timeout> -i <interval>
+mysql-punisher -h <hostname> -u <username> -p <password>
 ```
 
 or
 
 ```
-mpun -h <hostname> -u <username> [-p <password>] -t <timeout> -i <interval>
+mpun -h <hostname> -u <username> [-p <password>]
+```
+
+### Using PM2 (Recommended)
+
+PM2 is a process manager for Node.js applications.
+
+```
+npm install -g pm2
+pm2 start mysql-punisher -- -h <hostname> -u <username> -p <password>
+pm2 startup
+pm2 save
 ```
 
 ### Options
