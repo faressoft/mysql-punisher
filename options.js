@@ -21,38 +21,47 @@ module.exports = function() {
       .option('--watch-user <user>', 'watch a specefic user\'s processes (default: \'all\')')
       .parse(process.argv);
 
+    // Default value for the host
     if (typeof commander.host === 'undefined') {
       commander.host = 'localhost';
     }
 
+    // Default value for the host
     if (typeof commander.host === 'undefined') {
       commander.host = 'localhost';
     }
 
+    // Default value for the user
     if (typeof commander.user === 'undefined') {
       commander.user = 'root';
     }
 
+    // Default value for the password
     if (typeof commander.password === 'undefined') {
       commander.password = '';
     }
 
+    // Default value for the timeout
     if (typeof commander.timeout === 'undefined') {
       commander.timeout = 30;
     }
 
+    // Default value for the interval
     if (typeof commander.interval === 'undefined') {
       commander.interval = 1000;
     }
 
+    // Default value for the watchDatabase
     if (typeof commander.watchDatabase === 'undefined') {
       commander.watchDatabase = 'all';
     }
 
+    // Default value for the watchHost
     if (typeof commander.watchHost === 'undefined') {
       commander.watchHost = 'all';
     }
 
+    // Default value for the watchUser
     if (typeof commander.watchUser === 'undefined') {
       commander.watchUser = 'all';
     }
