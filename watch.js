@@ -5,14 +5,14 @@ var processList = require('./processlist.js')
  * Watch the processlist.js for timeout and kill the timedout processes 
  * 
  * @param {Object} connection MySQL connection object
- * @param {Object} options {host, user, password, timeout}
+ * @param {Object} options    {host, user, password, timeout, interval, watchDatabase, watchHost, watchUser}
  */
 module.exports = function watch(connection, options) {
 
   setTimeout(function() {
 
-    // Get a list of active query processes
-    processList(connection).then(function(processes) {
+    // Get a list of active query processes that exceed the timeout
+    processList(connection, options).then(function(processes) {
     
       // No active query processes
       if (!processes.length) {
@@ -23,13 +23,18 @@ module.exports = function watch(connection, options) {
       // Foreach active query process
       processes.forEach(function(processItem) {
 
-        // Check if the processes is timedout
-        if (processItem.time > options.timeout) {
-          // Print meta data about the process
-          console.log(processItem.id, processItem.time + 's', processItem.query);
-          // Kill the process
-          kill(connection, processItem.id);
-        }
+        // Print meta data about the process
+        console.log('KILL', processItem.id, processItem.time + 's', processItem.query);
+
+        // Kill the process
+        kill(connection, processItem.id).catch(function(error) {
+        
+          if (typeof error.code !== 'undefined') {
+            console.error(error.code);
+            process.exit();
+          }
+
+        });
 
       });
 
@@ -37,7 +42,14 @@ module.exports = function watch(connection, options) {
     
     }).catch(function(error) {
 
-      console.error(error);
+      if (typeof error.code !== 'undefined') {
+
+        if (typeof error.code !== 'undefined') {
+          console.error(error.code);
+          process.exit();
+        }
+
+      }
 
       watch(connection, options);
 

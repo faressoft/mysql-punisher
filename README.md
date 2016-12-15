@@ -32,11 +32,15 @@ mpun -h <hostname> -u <username> [-p <password>] -t <timeout> -i <interval>
 
 ### Options
 
-* -h, --host <host> **host name**
-* -u, --user <user> **user name**
-* -p, --password <password> **password**
-* -t, --timeout <seconds> **timeout in seconds**
-* -i, --interval <millisecond> **timer's interval in millisecond**
+* --help **output usage information**
+* -h, --host &lt;host&gt; **host name (default: 'localhost')**
+* -u, --user &lt;user&gt; **user name (default: 'root')**
+* -p, --password &lt;password&gt; **password (default: '')**
+* -t, --timeout &lt;seconds&gt; **timeout in seconds (default: 30)**
+* -i, --interval &lt;millisecond&gt; **timer's interval in millisecond (default: 5)**
+* --watch-database &lt;database&gt; **watch a specefic database processes (default: 'all')**
+* --watch-host &lt;host&gt; **watch a specefic host's processes (default: 'all')**
+* --watch-user &lt;user&gt; **watch a specefic user's processes (default: 'all')**
 
 # License
 

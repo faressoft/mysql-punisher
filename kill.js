@@ -12,7 +12,7 @@ module.exports = function(connection, processId) {
     // Kill the selected processes
     connection.query('KILL ' + processId, function(error) {
 
-      if (!error) {
+      if (error) {
         return reject(error);
       }
 

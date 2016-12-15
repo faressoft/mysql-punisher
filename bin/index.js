@@ -17,4 +17,13 @@ options().then(function(options) {
   // Watch the processlist and kill the timedout queries
   watch(conn, options);
 
+  // Log
+  setTimeout(function() {
+    console.log('[*]', 'Start watching ...');
+  }, options.interval + 100);
+
+}).catch(function(error) {
+
+  console.error(error);
+  
 });
