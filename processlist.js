@@ -37,6 +37,10 @@ module.exports = function(connection, options) {
 
     connection.query(query, function(error, rows, fields) {
 
+      if (error) {
+        return reject(error);
+      }
+
       // Convert to plain object
       var data = JSON.parse(JSON.stringify(rows));
 
@@ -44,10 +48,6 @@ module.exports = function(connection, options) {
       data = where.on(data);
 
       var processList = [];
-
-      if (error) {
-        return reject(error);
-      }
 
       // No active processes
       if (data.length <= 1) {

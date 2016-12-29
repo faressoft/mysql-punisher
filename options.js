@@ -1,4 +1,5 @@
 var commander = require('commander')
+  , path      = require('path')
   , inquirer  = require('inquirer');
 
 /**
@@ -11,6 +12,7 @@ module.exports = function() {
   return new Promise(function(resolve, reject) {
 
     commander
+      .version(require(path.join(__dirname, 'package.json')).version)
       .option('-h, --host <host>', 'host name (default: \'localhost\')')
       .option('-u, --user <user>', 'user name (default: \'root\')')
       .option('-p, --password <password>', 'password (default: \'\')')
