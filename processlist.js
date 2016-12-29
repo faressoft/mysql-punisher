@@ -1,45 +1,47 @@
+var arrayQuery = require('array-query');
+
 /**
  * Get a list of active query processes that exceed the timeout
  * 
  * @param  {Object}  connection MySQL connection object
  * @param  {Object}  options    {host, user, password, timeout, interval, watchDatabase, watchHost, watchUser}
- * @return {Promise} array of   active query processes {id, time, query}
+ * @return {Promise} array of active query processes {id, time, query}
  */
 module.exports = function(connection, options) {
 
   return new Promise(function(resolve, reject) {
 
-    // DB HOST USER
-    var where = [];
-
-    // Type
-    where.push('COMMAND = \'Query\'');
+    // Filters
+    var where = arrayQuery('Command').is('Query');
 
     // Timeout
-    where.push('TIME > ' + options.timeout);
+    where = where.and('Time').gt(options.timeout);
 
     // The watchDatabase option is set
     if (options.watchDatabase !== 'all') {
-      where.push('DB = \'' + options.watchDatabase + '\'');
+      where = where.and('db').is(options.watchDatabase);
     }
 
     // The watchHost option is set
     if (options.watchHost !== 'all') {
-      where.push('HOST = \'' + options.watchHost + '\'');
+      where = where.and('Host').is(options.watchHost);
     }
 
     // The watchUser option is set
     if (options.watchUser !== 'all') {
-      where.push('USER = \'' + options.watchUser + '\'');
+      where = where.and('User').is(options.watchUser);
     }
 
-    // Concatenate the conditions
-    where = where.join(' AND ');
-
     // Processlist query
-    var query = 'SELECT * FROM information_schema.PROCESSLIST WHERE ' + where;
+    var query = 'SHOW FULL PROCESSLIST';
 
     connection.query(query, function(error, rows, fields) {
+
+      // Convert to plain object
+      var data = JSON.parse(JSON.stringify(rows));
+
+      // Filter the data
+      data = where.on(data);
 
       var processList = [];
 
@@ -48,22 +50,22 @@ module.exports = function(connection, options) {
       }
 
       // No active processes
-      if (rows.length <= 1) {
+      if (data.length <= 1) {
         return resolve(processList);
       }
 
       // Foreach process
-      rows.forEach(function(processItem) {
+      data.forEach(function(processItem) {
 
         // Ignore the current processlist query
-        if (processItem.INFO === query) {
+        if (processItem.Info === query) {
           return;
         }
 
         processList.push({
-          id: processItem.ID,
-          time: processItem.TIME,
-          query: processItem.INFO
+          id: processItem.Id,
+          time: processItem.Time,
+          query: processItem.Info
         });
 
       });
