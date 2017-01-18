@@ -50,7 +50,7 @@ module.exports = function(connection, options) {
       var processList = [];
 
       // No active processes
-      if (data.length <= 1) {
+      if (!data.length) {
         return resolve(processList);
       }
 
