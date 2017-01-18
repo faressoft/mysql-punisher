@@ -41,6 +41,32 @@ pm2 startup
 pm2 save
 ```
 
+### Logs
+
+All killed process will be logged into the stdout in the following format:
+
+```
+KILL {id} {time}s {query}
+```
+
+Example
+
+```
+KILL 8978 31s SELECT SLEEP(100)
+```
+
+### Requirements
+
+The user that used to establish the connection usign the option `-u` should have the privilege to execute `SHOW FULL PROCESSLIST` for the desired processes.
+
+### Testing
+
+To check if everything is working fine and the mysql-punisher kills the queries, you can make a dump long query by:
+
+```
+SELECT SLEEP(100);
+```
+
 ### Options
 
 * --help **output usage information**
