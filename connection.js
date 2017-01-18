@@ -15,7 +15,8 @@ module.exports = function(host, user, password, timeout) {
   var connection = mysql.createPool({
     host: host,
     user: user,
-    password: password
+    password: password,
+    insecureAuth: true
   });
 
   return connection;
