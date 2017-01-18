@@ -17,7 +17,7 @@ module.exports = function() {
       .option('-u, --user <user>', 'user name (default: \'root\')')
       .option('-p, --password <password>', 'password (default: \'\')')
       .option('-t, --timeout <seconds>', 'timeout in seconds (default: 30)', parseInt)
-      .option('-i, --interval <millisecond>', 'timer\'s interval in millisecond (default: 5)', parseInt)
+      .option('-i, --interval <millisecond>', 'timer\'s interval in millisecond (default: 1000)', parseInt)
       .option('--watch-database <database>', 'watch a specefic database processes (default: \'all\')')
       .option('--watch-host <host>', 'watch a specefic host\'s processes (default: \'all\')')
       .option('--watch-user <user>', 'watch a specefic user\'s processes (default: \'all\')')
